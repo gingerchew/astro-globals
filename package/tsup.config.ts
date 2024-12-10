@@ -1,12 +1,13 @@
 import { defineConfig } from "tsup";
-import { peerDependencies } from "./package.json";
+import pkg from "./package.json" with { type: 'json' }
+const { peerDependencies } = pkg;
 
 export default defineConfig((options) => {
 	const dev = !!options.watch;
 	return {
 		entry: ["src/**/*.(ts|js)"],
 		format: ["esm"],
-		target: "node18",
+		target: "node22",
 		bundle: true,
 		dts: true,
 		sourcemap: true,
