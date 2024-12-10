@@ -1,10 +1,14 @@
 ---
 import Card from "../components/Card.astro";
 import Layout from "../layouts/Layout.astro";
+import { site_title, other_site_title} from 'globals:data'
+
 ---
 
 <Layout title="Welcome to Astro.">
 	<main>
+		{site_title}<br/>
+		{other_site_title}
 		<svg
 			class="astro-a"
 			width="495"

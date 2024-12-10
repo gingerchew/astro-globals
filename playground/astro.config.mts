@@ -3,13 +3,15 @@ import { createResolver } from "astro-integration-kit";
 import { hmrIntegration } from "astro-integration-kit/dev";
 import { defineConfig } from "astro/config";
 
-const { default: packageName } = await import("package-name");
+const { default: astroGlobals } = await import("astro-globals");
 
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
 		tailwind(),
-		packageName(),
+		astroGlobals({
+			sources: ['./global.ts', './src/globals2.ts']
+		}),
 		hmrIntegration({
 			directory: createResolver(import.meta.url).resolve("../package/dist"),
 		}),
