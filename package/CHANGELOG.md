@@ -1,5 +1,11 @@
 # astro-globals
 
+## 1.0.1
+
+### Patch Changes
+
+- 03b1d73: Fixes typescript types not injecting properly after name of virtual module was changed from globals:_ to globals/_
+
 ## 1.0.0
 
 ### Major Changes
