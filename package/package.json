@@ -11,7 +11,8 @@
 		"astro-integration",
 		"astro-component",
 		"withastro",
-		"astro"
+		"astro",
+		"utility"
 	],
 	"homepage": "https://github.com/gingerchew/astro-globals",
 	"publishConfig": {
