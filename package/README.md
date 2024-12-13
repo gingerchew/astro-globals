@@ -1,11 +1,80 @@
 # `astro-globals`
 
-This is an [Astro integration](https://docs.astro.build/en/guides/integrations-guide/) that stores site data in a global virtual module
+This is an [Astro integration](https://docs.astro.build/en/guides/integrations-guide/) that stores site data in a global virtual module.
 
 ## Usage
 
+Before going over usage, let's cover the *why* and *what* first.
 
-### Installation
+### Why should you use this?
+
+Let's say you have a component, `<Nav>` that has an `#id`. You want to use that `#id` to select it in another component. You _could_ export it from your `Nav.astro` component, but that can cause side effects.
+
+Instead, this *static* string can be exported from a `global.ts` file.
+
+```ts
+// ./global.ts
+export const nav_id = 'unique-string';
+```
+
+```astro
+---
+// ./components/NavTrigger.astro
+import { nav_id } from 'globals/data'
+---
+<button data-target={nav_id}>Open Nav</button>
+```
+
+```astro
+---
+// ./components/Nav.astro
+import { nav_id } from 'globals/data';
+---
+<nav id={nav_id}>...</nav>
+```
+
+### What should you keep in global data?
+
+The *recommended* type of data to keep in these global files is strictly static.
+
+```ts
+// ./global.ts
+// While I can't stop you from using default exports, it is not recommended. Named exports only
+export default 'Super special string'
+
+// This doesn't need to be global and might not work how you expect
+export const today = new Date();
+// Socials are a good example, but you should store them as strings, not URLs
+export const githubRepo = new URL('https://github.com/gingerchew/astro-globals');
+// This should be in your components or lib folder, even if the outcome will be the same for the same arguments
+export const aFunctionWithDeterministicOutput = (...args) => { /* ... */ }
+// Anything that goes in an env should not be in here
+export const MY_SECRET_TOKEN_THAT_WILL_GET_ME_FIRED_IF_SOMEONE_SEES_IT = '...';
+// If you feel the need to export your data in an object, you likely want to use the object config type instead
+export const myData = { ... };
+// If the data changes between environments, it probably shouldn't be in a global virtual module
+export const changesBasedOnEnvironment = import.meta.env.DEV ? 'Useful debugging data' : '';
+```
+
+Given this config:
+
+```ts
+export default defineConfig({
+  integrations: [globals({ source: ['./global.ts', './global2.ts', { name: 'special', file: './special.global.ts' }]})]
+});
+```
+
+The output should be:
+
+```ts
+// globals/data
+export * from "./global.ts";
+export * from "./global2.ts";
+// globals/special
+export * from "./special.global.ts";
+```
+
+## Installation
 
 Install the integration **automatically** using the Astro CLI:
 
@@ -104,6 +173,21 @@ export default defineConfig({
 ## Help! I'm getting red squiggles when I import `globals/*`!
 
 Try [`astro sync`](https://docs.astro.build/en/reference/cli-reference/#astro-sync) and that *should* fix your problem.
+
+## Help! I have a naming conflict!
+
+As much as I would love to parse each file through an AST and make sure there's no naming conflicts, that just isn't time/cost effective. Change the name of one.
+
+If you *absolutely* __positively__ ***NEED*** to have two pieces of data exported under the same name, you can move one of them to a named module.
+
+```ts
+export default defineConfig({
+  integrations: ['./global.ts', { name: 'has-conflict', file: './conflict.ts' }]
+})
+```
+
+Now they will not conflict anymore.
+
 
 ## Contributing
 
