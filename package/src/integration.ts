@@ -37,9 +37,10 @@ export const integration = defineIntegration({
 				 * and more accurate too
 				 */
 				"astro:config:done": async ({ injectTypes }) => {
+					const modules = Object.keys(imports);
 					injectTypes({
 						filename: "types.d.ts",
-						content: 'declare module "globals:data";',
+						content: modules.map(mod => `declare module "${mod}";`).join('\n'),
 					});
 				},
 			},
