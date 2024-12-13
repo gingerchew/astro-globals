@@ -1,5 +1,11 @@
 # astro-globals
 
+## 1.0.0
+
+### Major Changes
+
+- 049e4a4: Initial release
+
 ## 2.0.0
 
 ### Major Changes

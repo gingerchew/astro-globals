@@ -1,6 +1,6 @@
 {
 	"name": "astro-globals",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"description": "Stores data in a global virtual module",
 	"author": {
 		"name": "ginger",
