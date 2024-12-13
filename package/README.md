@@ -226,7 +226,7 @@ You can now edit files in `package`. Please note that making changes to those fi
 
 ## Licensing
 
-[MIT Licensed](https://github.com/gingerchew/astro-globals/blob/main/LICENSE). Made with ❤️ by [ginger](https://github.com/gingerchew/astro-globals).
+[MIT Licensed](https://github.com/gingerchew/astro-globals/blob/main/LICENSE). Made with ❤️ by [ginger](https://github.com/gingerchew).
 
 ## Acknowledgements
 
