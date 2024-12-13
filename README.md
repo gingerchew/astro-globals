@@ -1,4 +1,4 @@
-# astro-globals
+# `astro-globals`
 
 > Stores global data in a virtual module for easy access throughout your astro site
 
