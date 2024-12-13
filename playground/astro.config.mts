@@ -10,7 +10,7 @@ export default defineConfig({
 	integrations: [
 		tailwind(),
 		astroGlobals({
-			sources: ['./global.ts', './src/globals2.ts']
+			sources: ["./global.ts", { name: "site", file: "./src/globals2.ts" }],
 		}),
 		hmrIntegration({
 			directory: createResolver(import.meta.url).resolve("../package/dist"),
