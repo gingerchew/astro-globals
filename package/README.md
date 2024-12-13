@@ -101,6 +101,10 @@ export default defineConfig({
 });
 ```
 
+## Help! I'm getting red squiggles when I import `globals/*`!
+
+Try [`astro sync`](https://docs.astro.build/en/reference/cli-reference/#astro-sync) and that *should* fix your problem.
+
 ## Contributing
 
 This package is structured as a monorepo:
