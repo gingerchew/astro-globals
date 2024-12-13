@@ -4,28 +4,44 @@ import { z } from "astro/zod";
 export const integration = defineIntegration({
 	name: "astro-globals",
 	optionsSchema: z.object({
-		sources: z.array(z.string())
+		sources: z.array(
+			z.string().or(z.object({ name: z.string(), file: z.string() })),
+		),
 	}),
 	setup({ name, options }) {
-		
-		const exports = options.sources.map(file => `export * from "${file}"`).join('\n');
+		const imports = options.sources.reduce(
+			(acc, source) => {
+				if (typeof source === "string") {
+					acc["globals/data"] += `\nexport * from "${source}";`;
+				} else if (source.name) {
+					acc[`globals/${source.name}`] = `export * from "${source.file}";`;
+				}
+
+				return acc;
+			},
+			{
+				"globals/data": "",
+			} as Record<string, string>,
+		);
 
 		return {
 			hooks: {
-				'astro:config:setup': async (params) => {
+				"astro:config:setup": async (params) => {
 					addVirtualImports(params, {
-						name, 
-						imports: {
-							['globals:data']: exports
-						}
-					})
+						name,
+						imports,
+					});
 				},
-				'astro:config:done': async ({ injectTypes }) => {
+				/**
+				 * There has to be a better way to get the typescript types
+				 * and more accurate too
+				 */
+				"astro:config:done": async ({ injectTypes }) => {
 					injectTypes({
-						filename: 'types.d.ts',
-						content: 'declare module "globals:data";'
-					})
-				}
+						filename: "types.d.ts",
+						content: 'declare module "globals:data";',
+					});
+				},
 			},
 		};
 	},

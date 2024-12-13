@@ -1,5 +1,5 @@
 import { defineConfig } from "tsup";
-import pkg from "./package.json" with { type: 'json' }
+import pkg from "./package.json" with { type: "json" };
 const { peerDependencies } = pkg;
 
 export default defineConfig((options) => {
