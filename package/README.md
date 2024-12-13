@@ -39,19 +39,29 @@ The *recommended* type of data to keep in these global files is strictly static.
 
 ```ts
 // ./global.ts
-// While I can't stop you from using default exports, it is not recommended. Named exports only
+// While this pacakge can't stop you from using default exports, 
+// it is not recommended. Named exports only
 export default 'Super special string'
+
+// You shouldn't be exporting something mutable/used for tracking
+// for that you should use something with global state management
+export let timesCrashed = 0
 
 // This doesn't need to be global and might not work how you expect
 export const today = new Date();
-// Socials are a good example, but you should store them as strings, not URLs
+
+// Socials are a good example, but if you're going to export it as a URL, you should add that to the name
 export const githubRepo = new URL('https://github.com/gingerchew/astro-globals');
+
 // This should be in your components or lib folder, even if the outcome will be the same for the same arguments
 export const aFunctionWithDeterministicOutput = (...args) => { /* ... */ }
-// Anything that goes in an env should not be in here
+
+// Anything that goes in an env should **not** be in here
 export const MY_SECRET_TOKEN_THAT_WILL_GET_ME_FIRED_IF_SOMEONE_SEES_IT = '...';
+
 // If you feel the need to export your data in an object, you likely want to use the object config type instead
 export const myData = { ... };
+
 // If the data changes between environments, it probably shouldn't be in a global virtual module
 export const changesBasedOnEnvironment = import.meta.env.DEV ? 'Useful debugging data' : '';
 ```
@@ -169,6 +179,10 @@ export default defineConfig({
   ],
 });
 ```
+
+## Shouldn't this be the responsibility of a CMS?
+
+Yes! If you have a CMS that supports some sort of global variable, use that instead. If you are just making a hobby site, or don't need to mess with a database at all, you could likely get away with this.
 
 ## Help! I'm getting red squiggles when I import `globals/*`!
 
