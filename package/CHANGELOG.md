@@ -1,5 +1,11 @@
 # astro-globals
 
+## 1.0.2
+
+### Patch Changes
+
+- Adds some better docs and adds utility keyword to package.json
+
 ## 1.0.1
 
 ### Patch Changes
