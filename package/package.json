@@ -1,18 +1,27 @@
 {
 	"name": "astro-globals",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"description": "Stores data in a global virtual module",
 	"author": {
 		"name": "ginger",
 		"url": "https://github.com/gingerchew"
 	},
 	"license": "MIT",
-	"keywords": ["astro-integration", "astro-component", "withastro", "astro"],
+	"keywords": [
+		"astro-integration",
+		"astro-component",
+		"withastro",
+		"astro"
+	],
 	"homepage": "https://github.com/gingerchew/astro-globals",
 	"publishConfig": {
 		"access": "public"
 	},
-	"licenses": [{ "type":"MIT" }],
+	"licenses": [
+		{
+			"type": "MIT"
+		}
+	],
 	"sideEffects": false,
 	"exports": {
 		".": {
@@ -20,7 +29,9 @@
 			"default": "./dist/index.js"
 		}
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"dev": "tsup --watch",
 		"build": "tsup"
